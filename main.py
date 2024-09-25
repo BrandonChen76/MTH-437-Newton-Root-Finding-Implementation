@@ -28,7 +28,7 @@ def bisectionRootFinding(g, pos, neg, t):
         return approximation
 
     #Continue iteration if PC doesnt doesnt reach "0"
-    while ((pos - neg) / 2) != 0:
+    while g(approximation) != 0:
 
         #Update new approximation using bisection
         approximation = (pos + neg) / 2
@@ -59,9 +59,26 @@ def f(x):
 def F(x):
     return 3 * x ** 2
 
+#function: h(x) = sin(x) - x
+def h(x):
+    return np.sin(x) - x
+
+#derivative of h(x)
+def H(x):
+    return np.cos(x) - 1
+
+#function with epsilon: h(x) = sin(x+epsilon) - (x+epsilon)
+epsilon = .00000000000001
+def e(x):
+    return np.sin(x + epsilon) - (x + epsilon)
+
+#derivative of h(x)
+def E(x):
+    return np.cos(x + epsilon) - 1
+
 #input: g is function; pos and neg is for bisection part; t is tolerance
 #output: final approximation
-def newtonRootFinding(g, pos, neg, t):
+def newtonRootFinding(g, G, pos, neg, t):
 
     n = 0
 
@@ -70,9 +87,13 @@ def newtonRootFinding(g, pos, neg, t):
 
     #Keep iterating if approximation isn't the root
     while g(guess) != 0:
-        
+
+        #Make sure derivative isnt 0(shouldn't happen)
+        if abs(G(guess)) == 0:
+            break
+
         #Get new guess
-        newGuess = guess - f(guess) / F(guess)
+        newGuess = guess - g(guess) / G(guess)
 
         #Get error
         error = abs(newGuess - guess) / abs(newGuess)
@@ -92,4 +113,8 @@ def newtonRootFinding(g, pos, neg, t):
     print("\nFinal approximation:\n" + str(guess))
     return guess
 
-answer = newtonRootFinding(f, 2, 1, .000000000001)
+#answer = newtonRootFinding(f, F, 2, 1, .000000000001)
+answer = newtonRootFinding(h, H, -4, 5, .0000000001)
+errorAnswer = newtonRootFinding(e, E, -4, 5, .0000000001)
+
+print(abs(errorAnswer - answer) / abs(epsilon))
