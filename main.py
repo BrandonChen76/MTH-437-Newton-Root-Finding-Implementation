@@ -113,8 +113,8 @@ def newtonRootFinding(g, G, pos, neg, t):
     print("\nFinal approximation:\n" + str(guess))
     return guess
 
-#answer = newtonRootFinding(f, F, 2, 1, .000000000001)
-answer = newtonRootFinding(h, H, -4, 5, .0000000001)
-errorAnswer = newtonRootFinding(e, E, -4, 5, .0000000001)
+answer = newtonRootFinding(f, F, 2, 1, .000000000001)
+#answer = newtonRootFinding(h, H, -4, 5, .0000000001)
+#errorAnswer = newtonRootFinding(e, E, -4, 5, .0000000001)
 
-print(abs(errorAnswer - answer) / abs(epsilon))
+#print(abs(errorAnswer - answer) / abs(answer))
